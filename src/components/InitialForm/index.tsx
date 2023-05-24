@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
+import axios from "axios";
 import { z } from "zod";
 import { FileDropzone } from "../FileDropzone";
 
@@ -24,8 +25,20 @@ export function InitialForm() {
     resolver: zodResolver(formSchema),
   });
 
+  async function onSubmit(data: FormSchema) {
+    const response = await axios.post("api/openai", {
+      prompt: data.peticaoInicial,
+      Headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+      },
+    });
+
+    console.log("RESPOSTA =>", response);
+  }
+
   return (
-    <form onSubmit={handleSubmit(() => {})}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <div className="space-y-6">
         <div className="flex flex-col">
           <label
@@ -38,7 +51,6 @@ export function InitialForm() {
               type="text"
               id="peticaoInicial"
               {...register("peticaoInicial")}
-              maxLength={255}
             />
           </label>
           {errors.peticaoInicial?.message ? (
@@ -52,6 +64,21 @@ export function InitialForm() {
           <FileDropzone />
         </div>
       </div>
+
+      {isSubmitting && (
+        <div className="flex flex-col items-center justify-center gap-4">
+          <span className="font-ubuntu text-base font-bold ">
+            Gerando ementa...
+          </span>
+        </div>
+      )}
+
+      <button
+        type={"submit"}
+        className="rounded-xl bg-green-500 px-3 py-2 text-base font-bold text-white"
+      >
+        Confirmar
+      </button>
     </form>
   );
 }

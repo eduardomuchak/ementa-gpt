@@ -6,10 +6,7 @@ export default function Home() {
       <div className="flex w-full max-w-3xl flex-col gap-16 overflow-auto rounded-xl bg-white p-16">
         <div>
           <h1 className="font-ubuntu text-4xl font-bold leading-relaxed">
-            Gerador
-          </h1>
-          <h1 className="font-ubuntu text-4xl font-bold leading-relaxed">
-            de Ementas
+            Gerador de Ementas
           </h1>
         </div>
         <Steps />
