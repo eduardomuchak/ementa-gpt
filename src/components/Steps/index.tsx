@@ -1,10 +1,27 @@
 "use client";
+import "./style.css";
 
-import { useState } from "react";
-import { InitialForm } from "../InitialForm";
+import * as Tabs from "@radix-ui/react-tabs";
+import { FileStep } from "../FileStep";
+import { FormStep } from "../FormStep";
 
 export function Steps() {
-  const [step, setStep] = useState<"init" | "loading" | "finish">("init");
-
-  return <>{step === "init" && <InitialForm />}</>;
+  return (
+    <Tabs.Root className="TabsRoot" defaultValue="textTab">
+      <Tabs.List className="TabsList mb-10">
+        <Tabs.Trigger className="TabsTrigger" value="textTab">
+          Digitar Acórdão
+        </Tabs.Trigger>
+        <Tabs.Trigger className="TabsTrigger" value="fileTab">
+          Anexar Arquivo
+        </Tabs.Trigger>
+      </Tabs.List>
+      <Tabs.Content value="textTab" className="">
+        <FormStep />
+      </Tabs.Content>
+      <Tabs.Content value="fileTab" className="">
+        <FileStep />
+      </Tabs.Content>
+    </Tabs.Root>
+  );
 }

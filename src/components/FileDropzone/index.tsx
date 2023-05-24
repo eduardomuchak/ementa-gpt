@@ -41,7 +41,7 @@ export function FileDropzone() {
                   Cancelar
                 </button>
                 <button className="rounded-xl bg-green-500 px-3 py-2 text-base font-bold text-white">
-                  Confirmar
+                  Gerar Ementa
                 </button>
               </div>
             </div>

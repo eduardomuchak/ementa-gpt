@@ -2,7 +2,7 @@ import { openai } from "@/lib/openai";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
-  const { prompt } = await request.json();
+  const { userInput } = await request.json();
 
   try {
     const completion = await openai.createChatCompletion({
@@ -13,7 +13,7 @@ export async function POST(request: Request) {
           content:
             "Você é uma ferramenta de criação de ementas de acórdãos de Tribunais. Seu papel é ler o acórdão e criar uma ementa para ele.",
         },
-        { role: "user", content: prompt },
+        { role: "user", content: userInput },
       ],
     });
     return NextResponse.json({
