@@ -37,7 +37,7 @@ export function FileStep() {
           ) : (
             <div className="h-[26px]" />
           )}
-          <div className="flex h-80 w-full items-center justify-center rounded-xl bg-green-primary-light p-8">
+          <div className="flex h-80 w-full items-center justify-center rounded-xl bg-green-primary-light p-4 md:p-8">
             <FileDropzone result={resultProp} loading={isLoadingProp} />
           </div>
           {!result ? (

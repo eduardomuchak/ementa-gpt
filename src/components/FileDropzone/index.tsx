@@ -106,7 +106,7 @@ export function FileDropzone({ loading, result }: FileDropzoneProps) {
             >
               <input {...getInputProps()} />
               <Upload className="h-10 w-10" color="#34CB79" />
-              <span className="font-ubuntu text-base font-bold ">
+              <span className="text-center font-ubuntu text-base font-bold">
                 Insira o texto da decisão ou arraste o arquivo
               </span>
             </div>
