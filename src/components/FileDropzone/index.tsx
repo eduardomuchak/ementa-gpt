@@ -1,10 +1,25 @@
 "use client";
 
-import { File, Upload } from "lucide-react";
+import { postUploadArquivoTXT } from "@/services/upload";
+import { CheckCircle, File, Upload } from "lucide-react";
 import { useCallback, useState } from "react";
 import Dropzone from "react-dropzone";
+import { Ementa } from "../Ementa";
 
-export function FileDropzone() {
+interface FileDropzoneProps {
+  loading: {
+    isLoading: boolean;
+    setIsLoading: (value: boolean) => void;
+  };
+  result: {
+    result: string | null;
+    setResult: (value: string | null) => void;
+  };
+}
+
+export function FileDropzone({ loading, result }: FileDropzoneProps) {
+  const { setIsLoading } = loading;
+  const { setResult, result: resultProp } = result;
   const [file, setFile] = useState<File | null>(null);
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
@@ -23,6 +38,42 @@ export function FileDropzone() {
     });
   }, []);
 
+  async function handleUpload() {
+    if (!file) return;
+    setIsLoading(true);
+    const fileData = new FormData();
+    fileData.append("file", file);
+    const { data } = await postUploadArquivoTXT(fileData);
+    setResult(data.data);
+  }
+
+  if (resultProp) {
+    return (
+      <Dropzone onDrop={onDrop}>
+        {({ getRootProps, getInputProps }) => (
+          <div className="flex flex-col items-center justify-center gap-4">
+            <CheckCircle className="h-20 w-20" color="#34CB79" />
+            <span className="font-ubuntu text-base font-bold ">
+              Ementa gerada com sucesso!
+            </span>
+            <div className="flex flex-row gap-4">
+              <button
+                className="rounded-xl bg-red-500 px-3 py-2 text-base font-bold text-white"
+                onClick={() => {
+                  setFile(null);
+                  setResult(null);
+                }}
+              >
+                Tentar novamente
+              </button>
+              <Ementa result={resultProp} />
+            </div>
+          </div>
+        )}
+      </Dropzone>
+    );
+  }
+
   return (
     <Dropzone onDrop={onDrop}>
       {({ getRootProps, getInputProps }) => (
@@ -40,7 +91,11 @@ export function FileDropzone() {
                 >
                   Cancelar
                 </button>
-                <button className="rounded-xl bg-green-500 px-3 py-2 text-base font-bold text-white">
+                <button
+                  className="rounded-xl bg-green-500 px-3 py-2 text-base font-bold text-white"
+                  type="button"
+                  onClick={() => handleUpload()}
+                >
                   Gerar Ementa
                 </button>
               </div>
