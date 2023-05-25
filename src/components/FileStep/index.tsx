@@ -42,8 +42,8 @@ export function FileStep() {
           </div>
           {!result ? (
             <span className="font-ubuntu text-sm leading-relaxed text-red-500">
-              * Somente arquivos no formato .docx e .txt são aceitos. O arquivo
-              não será armazenado.
+              * Somente arquivos no formato .txt são aceitos. O arquivo não será
+              armazenado.
             </span>
           ) : (
             <div className="h-[22.75px]" />
